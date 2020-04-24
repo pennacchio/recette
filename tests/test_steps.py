@@ -23,15 +23,17 @@ def test_step_other_learner():
     ).astype(dtypes)
 
     # Compute output
-    step_other = step_other_learner(train_df, cols=["color", "animal"], threshold=0.5)
+    step_other = step_other_learner(
+        train_df, cols=["color", "animal"], threshold=0.5, other_cat="abcd"
+    )
     output_df = step_other(test_df)
 
     # Check if it's right
     expected_df = pd.DataFrame(
         {
             "color": pd.Categorical(
-                ["red", "red", "other", "other", "other", "other"],
-                categories=["red", "other"],
+                ["red", "red", "abcd", "abcd", "abcd", "abcd"],
+                categories=["red", "abcd"],
             ),
             "animal": ["cat", "cat", "cat", "cat", "cat", "cat"],
             "size": [11, None, 13, 17, 19, 23],
