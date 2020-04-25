@@ -27,6 +27,7 @@ def step_other_learner(
         threshold.
 
     """
+    # Get categories above proportion threshold for each column
     above_threshold_cats = {
         col: df.loc[:, col]
         .value_counts(normalize=True, dropna=ignore_na)
@@ -38,9 +39,17 @@ def step_other_learner(
     def step_other(df: pd.DataFrame) -> pd.DataFrame:
         df = df.copy()
         for col in cols:
+            # Add other category if it isn't already present
             if other_cat not in df.loc[:, col].cat.categories:
                 df.loc[:, col] = df.loc[:, col].cat.add_categories(other_cat)
-            df.loc[~df.loc[:, col].isin(above_threshold_cats[col]), col] = other_cat
+
+            # Find out which rows should be collapsed
+            is_other_cat = ~(
+                df.loc[:, col].isin(above_threshold_cats[col]) | df.loc[:, col].isna()
+            )
+
+            # Collapse categories and remove them
+            df.loc[is_other_cat, col] = other_cat
             df.loc[:, col] = df.loc[:, col].cat.remove_unused_categories()
 
         return df

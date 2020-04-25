@@ -17,7 +17,7 @@ def test_step_other_learner():
     test_df = pd.DataFrame(
         {
             "color": ["red", "red", "yellow", "blue", "blue", "green"],
-            "animal": ["cat", "cat", "cat", "cat", "cat", "cat"],
+            "animal": ["cat", "cat", "cat", "cat", "cat", None],
             "size": [11, None, 13, 17, 19, 23],
         }
     ).astype(dtypes)
@@ -35,7 +35,7 @@ def test_step_other_learner():
                 ["red", "red", "abcd", "abcd", "abcd", "abcd"],
                 categories=["red", "abcd"],
             ),
-            "animal": ["cat", "cat", "cat", "cat", "cat", "cat"],
+            "animal": ["cat", "cat", "cat", "cat", "cat", None],
             "size": [11, None, 13, 17, 19, 23],
         }
     ).astype(dtypes)
