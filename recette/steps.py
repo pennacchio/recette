@@ -2,6 +2,7 @@ from typing import Callable, List
 from uuid import uuid4
 
 import pandas as pd
+from pandas._typing import Dtype
 
 
 StepType = Callable[[pd.DataFrame], pd.DataFrame]
@@ -64,6 +65,7 @@ def step_dummy_learner(
     drop_first: bool = True,
     keep_cols: bool = False,
     sep: str = "=",
+    dtype: Dtype = "UInt8",
 ) -> StepType:
     """Convert categorical columns to dummy columns.
 
@@ -74,6 +76,8 @@ def step_dummy_learner(
             by removing the first category.
         keep_cols: Keep processed columns (in addition to dummy columns).
         sep: Separator between column name and category for dummy column names.
+        dtype: Dummies data type. Note that if NAs are expected, a nullable data
+            type should be used.
 
     Returns:
         Step that converts categorical columns to dummy columns.
@@ -119,8 +123,8 @@ def step_dummy_learner(
             dummy_cols = [col + sep + str(cat) for cat in cats]
             dummies_df.loc[df.loc[:, col].isna(), dummy_cols] = pd.NA
 
-        # Cast dummies to nullable integer type
-        dummies_df = dummies_df.astype("Int64")
+        # Cast dummies to given dtype
+        dummies_df = dummies_df.astype(dtype)
 
         return original_df.drop(columns=[] if keep_cols else cols).join(dummies_df)
 

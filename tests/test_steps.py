@@ -40,7 +40,7 @@ def test_step_other_learner():
 
 
 def test_step_dummy_learner():
-    dtypes = {"color": "category", "animal": "category", "size": "Int64"}
+    dtypes = {"color": "category", "animal": "category", "size": "UInt8"}
     train_df = pd.DataFrame(
         {
             "color": pd.Categorical(
@@ -71,6 +71,6 @@ def test_step_dummy_learner():
             "animal_cat": [1, None, 1, 1, 1, 0],
             "animal_dog": [0, None, 0, 0, 0, 1],
         },
-        dtype="Int64",
+        dtype="UInt8",
     )
     assert_frame_equal(output_df, expected_df)
