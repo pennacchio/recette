@@ -5,7 +5,7 @@ with open("README.md", "r") as f:
 
 setuptools.setup(
     name="recette",
-    version="0.1.0dev",
+    version="0.1.0",
     author="Alan Pennacchio",
     author_email="alanpennacchio@icloud.com",
     description="Data preprocessing utilities on top of pandas.",
