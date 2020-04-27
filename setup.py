@@ -1,11 +1,33 @@
+import codecs
+import os.path
+
 import setuptools
+
+
+# Functions used to parse the package version from its top __init__.py following
+# the approach in:
+# https://packaging.python.org/guides/single-sourcing-package-version/
+def read(rel_path):
+    here = os.path.abspath(os.path.dirname(__file__))
+    with codecs.open(os.path.join(here, rel_path), "r") as f:
+        return f.read()
+
+
+def get_version(rel_path):
+    for line in read(rel_path).splitlines():
+        if line.startswith("__version__"):
+            delim = '"' if '"' in line else "'"
+            return line.split(delim)[1]
+    else:
+        raise RuntimeError("Unable to find version string.")
+
 
 with open("README.md", "r") as f:
     long_description = f.read()
 
 setuptools.setup(
     name="recette",
-    version="0.1.0",
+    version=get_version("recette/__init__.py"),
     author="Alan Pennacchio",
     author_email="alanpennacchio@icloud.com",
     description="Data preprocessing utilities on top of pandas.",
