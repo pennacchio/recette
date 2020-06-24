@@ -1,4 +1,5 @@
-from recette.steps import step_dummy_learner, step_other_learner
+from recette.steps import prep_step_dummy, prep_step_other
+from recette.utils import mix
 
 # Package version single source of truth
-__version__ = "0.1.1"
+__version__ = "0.2.0"

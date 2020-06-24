@@ -1,10 +1,10 @@
 import pandas as pd
 from pandas.testing import assert_frame_equal
 
-from recette.steps import step_dummy_learner, step_other_learner
+from recette.steps import prep_step_dummy, prep_step_other
 
 
-def test_step_other_learner():
+def test_prep_step_other():
     dtypes = {"color": "category", "animal": "category", "size": "Int64"}
     train_df = pd.DataFrame(
         {
@@ -21,7 +21,7 @@ def test_step_other_learner():
         }
     ).astype(dtypes)
 
-    step_other = step_other_learner(
+    step_other = prep_step_other(
         train_df, cols=["color", "animal"], threshold=0.5, other_cat="abcd"
     )
     output_df = step_other(test_df)
@@ -39,7 +39,7 @@ def test_step_other_learner():
     assert_frame_equal(output_df, expected_df)
 
 
-def test_step_dummy_learner():
+def test_prep_step_dummy():
     dtypes = {"color": "category", "animal": "category", "size": "UInt8"}
     train_df = pd.DataFrame(
         {
@@ -61,7 +61,7 @@ def test_step_dummy_learner():
         }
     ).astype(dtypes)
 
-    step_dummy = step_dummy_learner(train_df, cols=["color", "animal"], sep="_")
+    step_dummy = prep_step_dummy(train_df, cols=["color", "animal"], sep="_")
     output_df = step_dummy(test_df)
 
     expected_df = pd.DataFrame(

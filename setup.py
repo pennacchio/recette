@@ -36,7 +36,7 @@ setuptools.setup(
     url="https://github.com/pennacchio/recette",
     packages=["recette"],
     python_requires=">=3.6",
-    install_requires=["pandas >= 1.0.3"],
+    install_requires=["pandas >= 1.0.3", "toolz >= 0.10.0"],
     zip_safe=False,
     classifiers=[
         "Programming Language :: Python :: 3",

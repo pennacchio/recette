@@ -1,14 +1,14 @@
-from typing import Callable, List
+from typing import List
 from uuid import uuid4
 
 import pandas as pd
-from pandas._typing import Dtype
+from toolz import curry
+
+from recette.types import Dtype, StepType
 
 
-StepType = Callable[[pd.DataFrame], pd.DataFrame]
-
-
-def step_other_learner(
+@curry
+def prep_step_other(
     df: pd.DataFrame,
     cols: List[str],
     threshold: float = 0.05,
@@ -59,7 +59,8 @@ def step_other_learner(
     return step_other
 
 
-def step_dummy_learner(
+@curry
+def prep_step_dummy(
     df: pd.DataFrame,
     cols: List[str],
     drop_first: bool = True,
