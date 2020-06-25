@@ -2,10 +2,10 @@ import pandas as pd
 from pandas.testing import assert_frame_equal
 
 from recette.steps import prep_step_dummy, prep_step_other
-from recette.utils import mix
+from recette.utils import combine
 
 
-def test_mix():
+def test_combine():
     dtypes = {"color": "category", "animal": "category", "size": "UInt8"}
     train_df = pd.DataFrame(
         {
@@ -22,7 +22,7 @@ def test_mix():
         }
     ).astype(dtypes)
 
-    prep = mix(
+    prep = combine(
         prep_step_other(cols=["color", "animal"], threshold=0.5, other_cat="abcd"),
         prep_step_dummy(cols=["color", "animal"], sep="_"),
     )

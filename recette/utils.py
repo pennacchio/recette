@@ -5,7 +5,7 @@ import pandas as pd
 from recette.types import PrepType, StepType
 
 
-def mix(*step_or_preps: Union[StepType, PrepType]) -> PrepType:
+def combine(*step_or_preps: Union[StepType, PrepType]) -> PrepType:
     """Combine a sequence of steps and preparations into a single preparation.
 
     Args:
@@ -16,11 +16,11 @@ def mix(*step_or_preps: Union[StepType, PrepType]) -> PrepType:
 
     """
 
-    def recipe(df: pd.DataFrame) -> StepType:
+    def prep(df: pd.DataFrame) -> StepType:
         steps = []
         df_or_step = df
         for step_or_prep in iter(step_or_preps):
-            # Apply step to DataFrame, returning a DataFrame or a step
+            # Apply step or prep to DataFrame, returning a DataFrame or a step
             df_or_step = step_or_prep(df)
             if isinstance(df_or_step, pd.DataFrame):
                 # Store step in case it's a step
@@ -39,4 +39,4 @@ def mix(*step_or_preps: Union[StepType, PrepType]) -> PrepType:
 
         return step
 
-    return recipe
+    return prep
