@@ -28,7 +28,6 @@ def test_combine():
     )
     step = prep(train_df)
     output_df = step(test_df)
-    print(output_df)
 
     expected_df = pd.DataFrame(
         {
