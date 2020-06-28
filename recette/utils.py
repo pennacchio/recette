@@ -25,6 +25,7 @@ def combine(*step_or_preps: Union[StepType, PrepType]) -> PrepType:
             if isinstance(df_or_step, pd.DataFrame):
                 # Store step in case it's a step
                 steps.append(step_or_prep)
+                df = df_or_step
             else:
                 # Else, apply step to DataFrame and store step
                 steps.append(df_or_step)

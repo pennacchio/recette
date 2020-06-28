@@ -23,6 +23,10 @@ def test_combine():
     ).astype(dtypes)
 
     prep = combine(
+        lambda df: df.assign(
+            size=df.loc[:, "size"] * 2,
+            animal=df.loc[:, "animal"].cat.rename_categories({"dog": "horse"}),
+        ),
         prep_step_other(cols=["color", "animal"], threshold=0.5, other_cat="abcd"),
         prep_step_dummy(cols=["color", "animal"], sep="_"),
     )
@@ -31,9 +35,9 @@ def test_combine():
 
     expected_df = pd.DataFrame(
         {
-            "size": [11, None, 13, 17, 19, 23],
+            "size": [22, None, 26, 34, 38, 46],
             "color_abcd": [0, 0, 1, 1, 1, 1],
-            "animal_dog": [0, 0, 0, 0, 0, None],
+            "animal_horse": [0, 0, 0, 0, 0, None],
         },
         dtype="UInt8",
     )
